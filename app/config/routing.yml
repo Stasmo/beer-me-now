@@ -1,0 +1,5 @@
+stasmo_example_sample_api:
+    resource: "@StasmoExampleSampleApiBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
