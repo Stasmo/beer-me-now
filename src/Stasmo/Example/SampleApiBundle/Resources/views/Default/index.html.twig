@@ -1,1 +1,12 @@
-Hello {{ name }}!
+{% extends '::base.html.twig' %}
+{% block body %}
+	<form class="search">
+  		<input id="searchField" type="text" class="searchTerm" placeholder="Search a location...">
+	</form>
+	<div id="map"></div>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLg2rVzpUTsP3AlUjkN3QIPqMW1eTNAE8&libraries=places"></script>
+<script type="text/javascript" src="bundles/stasmoexamplesampleapi/js/app.js"></script>
+{% endblock %}

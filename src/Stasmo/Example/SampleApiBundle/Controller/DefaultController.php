@@ -5,10 +5,41 @@ namespace Stasmo\Example\SampleApiBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
+
+    /**
+     * @Route("/")
+     */
+    public function defaultAction(Request $request)
+    {
+        $method = $request->getMethod();
+        if ($method === "POST") {
+            //extract search data from $request object
+        }
+
+        return $this->render('StasmoExampleSampleApiBundle:Default:index.html.twig');
+    }
+
+    /**
+     * @Route("/search")
+     */
+    public function searchAction(Request $request)
+    {
+        $method = $request->getMethod();
+        if ("POST" === $method) {
+            $searchString = $request->request->get('searchString');
+            return $this->geocodeResults($searchString);
+        }
+    }
+
+    private function geocodeResults($searchString)
+    {
+        
+    }
 
     /**
      * @Route("/bars/{id}")
