@@ -1,0 +1,31 @@
+<?php
+
+namespace Stasmo\Example\SampleApiBundle\Document;
+
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+
+/**
+ * @MongoDB\Document
+ */
+class Bar
+{
+    /**
+     * @MongoDB\Id
+     */
+    protected $id;
+
+    /**
+     * @MongoDB\String
+     */
+    protected $name;
+
+    /**
+     * @MongoDB\Float
+     */
+    protected $latitude;
+
+    /**
+     * @MongoDB\Float
+     */
+    protected $longtitude;
+}
