@@ -28,4 +28,24 @@ class Bar
      * @MongoDB\Float
      */
     protected $longtitude;
+
+    /**
+     * @MongoDB\int
+     */
+    protected $price;
+
+    /**
+     * @MongoDB\int
+     */
+    protected $sketchiness;
+
+    /**
+     * @MongoDB\String
+     */
+    protected $cover;
+
+    /**
+     * @MongoDB\String
+     */
+    protected $hours;
 }

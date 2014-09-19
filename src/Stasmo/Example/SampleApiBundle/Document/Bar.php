@@ -30,6 +30,26 @@ class Bar
     protected $longtitude;
 
     /**
+     * @MongoDB\int
+     */
+    protected $price;
+
+    /**
+     * @MongoDB\int
+     */
+    protected $sketchiness;
+
+    /**
+     * @MongoDB\String
+     */
+    protected $cover;
+
+    /**
+     * @MongoDB\String
+     */
+    protected $hours;
+
+    /**
      * Get id
      *
      * @return id $id
@@ -103,5 +123,93 @@ class Bar
     public function getLongtitude()
     {
         return $this->longtitude;
+    }
+
+    /**
+     * Set price
+     *
+     * @param int $price
+     * @return self
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return int $price
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set sketchiness
+     *
+     * @param int $sketchiness
+     * @return self
+     */
+    public function setSketchiness($sketchiness)
+    {
+        $this->sketchiness = $sketchiness;
+        return $this;
+    }
+
+    /**
+     * Get sketchiness
+     *
+     * @return int $sketchiness
+     */
+    public function getSketchiness()
+    {
+        return $this->sketchiness;
+    }
+
+    /**
+     * Set cover
+     *
+     * @param string $cover
+     * @return self
+     */
+    public function setCover($cover)
+    {
+        $this->cover = $cover;
+        return $this;
+    }
+
+    /**
+     * Get cover
+     *
+     * @return string $cover
+     */
+    public function getCover()
+    {
+        return $this->cover;
+    }
+
+    /**
+     * Set hours
+     *
+     * @param string $hours
+     * @return self
+     */
+    public function setHours($hours)
+    {
+        $this->hours = $hours;
+        return $this;
+    }
+
+    /**
+     * Get hours
+     *
+     * @return string $hours
+     */
+    public function getHours()
+    {
+        return $this->hours;
     }
 }
