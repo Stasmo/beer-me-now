@@ -26,6 +26,19 @@ class AdminController extends Controller
         );
     }
 
+    /**
+     * @Route("/new")
+     */
+    public function newBar(Request $request)
+    {
+        $method = $request->getMethod();
+
+        return $this->render(
+            'StasmoExampleSampleApiBundle:Admin:add.html.twig',
+            []
+        );
+    }
+
     private function getBarList($page = 0)
     {
         $bars = [];
