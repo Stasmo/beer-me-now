@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Stasmo\Example\SampleApiBundle\Document\Bar;
 
 class AdminController extends Controller
 {
@@ -33,9 +34,25 @@ class AdminController extends Controller
     {
         $method = $request->getMethod();
 
+        // create a task and give it some dummy data for this example
+        $bar = new Bar();
+
+        $form = $this->createFormBuilder($bar)
+            ->add('Name', 'text')
+            ->add('Price', 'text')
+            ->add('Sketchiness', 'text')
+            ->add('Cover', 'text')
+            ->add('Hours', 'text')
+            ->add('Latitude', 'text')
+            ->add('Longtitude', 'text')
+            ->add('save', 'submit', array('label' => 'Add Bar'))
+            ->getForm();
+
         return $this->render(
             'StasmoExampleSampleApiBundle:Admin:add.html.twig',
-            []
+            array(
+                'form' => $form->createView(),
+            )
         );
     }
 

@@ -1,5 +1,5 @@
 {% extends '::base.html.twig' %}
-{% block scripts %}
+{% block javascripts %}
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
   <script>
     var vancouver = new google.maps.LatLng(49.2500,-123.1000);
@@ -7,7 +7,7 @@
     var map;
     function initialize() {
       var mapOptions = {
-        zoom: 12,
+        zoom: 14,
         center: vancouver
       };
       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -19,24 +19,24 @@
         location: vancouver,
         radius: '500',
         query: text
-    };
+      };
 
-
-    function callback(results, status) {
-      if (status != google.maps.places.PlacesServiceStatus.OK) {
-        alert(status);
-        return;
+      function callback(results, status) {
+        if (status != google.maps.places.PlacesServiceStatus.OK) {
+          alert(status);
+          return;
+        }
+        result = results[0];
+        var marker = new google.maps.Marker({
+          map: map,
+          position: result.geometry.location
+        });
+        $("#form_Name").val(text);
+        $("#form_Price").val(result.price_level);
+        $("#form_Latitude").val(result.geometry.location.lat());
+        $("#form_Longtitude").val(result.geometry.location.lng());
+        map.panTo(result.geometry.location);
       }
-      result = results[0];
-      var marker = new google.maps.Marker({
-        map: map,
-        position: result.geometry.location
-      });
-      $("#price").html(result.price_level);
-      $("#address").html(result.formatted_address);
-      $("#lat").html(result.geometry.location.lat());
-      $("#lng").html(result.geometry.location.lng());
-    }
 
       service.textSearch(request, callback);
     }
@@ -89,20 +89,7 @@
     Bar Name: <input type="text" id="barsearch" />
     <div id="barInfo"></div>
     <div style="width: 800px; height: 300px; margin: 10px;" id="map-canvas"></div>
-    Ratings:
-    <table style="margin-left: 50px">
-    <tr><td>Name:</td><td></td></tr>
-    <tr><td>Address:</td><td id="address"></td></tr>
-    <tr><td>Price:</td><td id="price"></td></tr>
-    <tr><td>Sketchiness:</td><td id="sketchiness"></td></tr>
-    <tr><td>Cover:</td><td></td></tr>
-    <tr><td>Hours:</td><td></td></tr>
-    <tr><td>Lat:</td><td id="lat"></td></tr>
-    <tr><td>Long:</td><td id="lng"></td></tr>
-    </table>
+    {{ form(form) }}
   </div>
 </div>
-{% endblock %}
-{% block javascripts %}
-
 {% endblock %}
