@@ -3,16 +3,14 @@
 <div class="container">
 	<h1>Beer Me <small>Now</small></h1>
 
-
-
 <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">List</a></li>
-        <li><a href="/new">Add</a></li>
+        <li class="active"><a href="{{ path('admin_home') }}">List</a></li>
+        <li><a href="{{ path('admin_new') }}">Add</a></li>
       </ul>
       <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
@@ -37,8 +35,8 @@
 
     	<tr>
     		<td>{{ bar.name }}</td>
-    		<td width="50px"><a href="">Edit</a></td>
-    		<td width="50px"><a href="">Delete</a></td>
+    		<td width="50px"><a href="{{ path('admin_edit', {'id': bar.id} )}}">Edit</a></td>
+    		<td width="50px"><a href="{{ path('admin_delete', {'id': bar.id} )}}">Delete</a></td>
     	</tr>
 
 		{% endfor %}

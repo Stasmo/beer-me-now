@@ -12,14 +12,17 @@ use Stasmo\Example\SampleApiBundle\Document\Bar;
 class AdminController extends Controller
 {
 
+    private $numResults;
+    const resultsPerPage = 10;
+
     /**
-     * @Route("/admin")
+     * @Route("/admin", name="admin_home")
      */
     public function defaultAction(Request $request)
     {
         $method = $request->getMethod();
         $page = $request->query->get('page');
-
+        $this->addSuccessFlash("hello");
         return $this->render(
             'StasmoExampleSampleApiBundle:Admin:index.html.twig',
             [ 'bars' => $this->getBarList($page), 'numberOfPages' => $this->getNumberOfBarPages() ]
@@ -27,32 +30,17 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/new")
+     * @Route("/admin/new", name="admin_new")
      */
     public function newBar(Request $request)
     {
         $method = $request->getMethod();
-
-        // create a task and give it some dummy data for this example
         $bar = new Bar();
-
-        $form = $this->createFormBuilder($bar)
-            ->add('Name', 'text')
-            ->add('Price', 'text')
-            ->add('Sketchiness', 'text')
-            ->add('Cover', 'text')
-            ->add('Hours', 'text')
-            ->add('Latitude', 'text')
-            ->add('Longtitude', 'text')
-            ->add('save', 'submit', array('label' => 'Add Bar'))
-            ->getForm();
-
-            $form->handleRequest($request);
+        $form = $this->generateBarForm($bar);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $dm = $this->get('doctrine_mongodb')->getManager();
-            $dm->persist($bar);
-            $dm->flush();
+            $this->saveBar($bar);
         }
         return $this->render(
             'StasmoExampleSampleApiBundle:Admin:add.html.twig',
@@ -62,23 +50,120 @@ class AdminController extends Controller
         );
     }
 
-    private function getBarList($page = 0)
+
+    /**
+     * @Route("/admin/edit/{id}", name="admin_edit")
+     */
+    public function editBar(Request $request, $id)
     {
-        $bars = $this->get('doctrine_mongodb')
+        $method = $request->getMethod();
+        $bar = $this->get('doctrine_mongodb')
             ->getRepository('StasmoExampleSampleApiBundle:Bar')
-            ->findAll();
-        //$pageSize = 10;
-        //$start = $page * $pageSize;
-        //for ($i = $start; $i < $start+$pageSize; $i++) {
-        //    $bars[] = [ 'name' => 'bar'.$i ];
-        //}
+            ->find($id);
+
+        if (!$bar) {
+            throw $this->createNotFoundException('No product found for id '.$id);
+        }
+
+        $form = $this->generateBarForm($bar);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $this->saveBar($bar);
+        }
+
+        return $this->render(
+            'StasmoExampleSampleApiBundle:Admin:add.html.twig',
+            array(
+                'form' => $form->createView(),
+            )
+        );
+    }
+
+    /**
+     * @Route("/admin/delete/{id}", name="admin_delete")
+     */
+    public function deleteBarAction(Request $request, $id)
+    {
+        $method = $request->getMethod();
+        $bar = $this->get('doctrine_mongodb')
+            ->getRepository('StasmoExampleSampleApiBundle:Bar')
+            ->find($id);
+
+        if (!$bar) {
+            throw $this->createNotFoundException('No product found for id '.$id);
+        }
+
+        $this->deleteBar($bar);
+
+        return $this->redirect($this->get('router')->generate('admin_home'));
+    }
+
+    private function generateBarForm($bar) {
+        $form = $this->createFormBuilder($bar)
+            ->add('Name', 'text')
+            ->add('Price', 'text')
+            ->add('Sketchiness', 'text')
+            ->add('Website', 'text')
+            ->add('Cover', 'text')
+            ->add('Hours', 'text')
+            ->add('Latitude', 'text')
+            ->add('Longtitude', 'text')
+            ->add('save', 'submit', array('label' => 'Save Bar'))
+            ->getForm();
+        return $form;
+    }
+
+    private function saveBar($bar) {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $bar->setLocation([$bar->getLongtitude(), $bar->getLatitude()]);
+        $dm->persist($bar);
+        $dm->flush();
+    }
+
+
+    private function deleteBar($bar) {
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $dm->remove($bar);
+        $dm->flush();
+    }
+
+    private function getBarList($page = 1)
+    {
+        if (!$page) {
+            $page = 1;
+        }
+
+        $dm = $this->get('doctrine_mongodb')->getManager();
+        $numSkip = ($page-1) * self::resultsPerPage;
+        $bars = $dm->createQueryBuilder('StasmoExampleSampleApiBundle:Bar')
+            ->limit(self::resultsPerPage)
+            ->skip($numSkip)
+            ->getQuery()
+            ->execute();
+
+        $this->numResults = count($bars);
 
         return $bars;
     }
 
     private function getNumberOfBarPages()
     {
-        return 5;
+        return ceil($this->numResults/self::resultsPerPage);
+    }
+
+    private function addSuccessFlash($message)
+    {
+        $this->get('session')->getFlashBag()->add('success', $message);
+    }
+
+    private function addWarningFlash($message)
+    {
+        $this->get('session')->getFlashBag()->add('warning', $message);
+    }
+
+    private function addErrorFlash($message)
+    {
+        $this->get('session')->getFlashBag()->add('danger', $message);
     }
 
 }

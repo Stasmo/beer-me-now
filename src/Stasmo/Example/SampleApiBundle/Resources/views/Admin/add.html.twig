@@ -4,11 +4,19 @@
   <script>
     var vancouver = new google.maps.LatLng(49.2500,-123.1000);
 
+    //Biases the search to the Vancouver area, but does not restrict it
+    //sw, ne
+    var bounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(49, -124),
+      new google.maps.LatLng(50, -123)
+    );
+
     var map;
     function initialize() {
       var mapOptions = {
         zoom: 14,
-        center: vancouver
+        center: vancouver,
+        bounds: bounds
       };
       map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
       service = new google.maps.places.PlacesService(map);
@@ -52,7 +60,13 @@
           $(this).trigger("enterKey");
         }
       });
-    });
+        //Create the autocomplete object
+    var options = {
+      bounds: bounds
+    };
+    var input = $("#barsearch");
+    autocomplete = new google.maps.places.Autocomplete(input[0], options);
+  });
 
   </script>
 
@@ -70,8 +84,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="#">List</a></li>
-        <li class="active"><a href="/admin/new">Add</a></li>
+        <li><a href="{{ path('admin_home') }}">List</a></li>
+        <li class="active"><a href="{{ path('admin_new') }}">Add</a></li>
       </ul>
       <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
@@ -86,7 +100,7 @@
 
 
   <div class="col-sm-12">
-    Bar Name: <input type="text" id="barsearch" />
+    Bar Name: <input type="text" id="barsearch" style="width: 30%" />
     <div id="barInfo"></div>
     <div style="width: 800px; height: 300px; margin: 10px;" id="map-canvas"></div>
     {{ form(form) }}

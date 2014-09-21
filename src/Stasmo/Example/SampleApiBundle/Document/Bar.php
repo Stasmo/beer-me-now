@@ -50,6 +50,16 @@ class Bar
     protected $hours;
 
     /**
+     * @MongoDB\String
+     */
+    protected $website;
+
+    /**
+     * @MongoDB\Collection
+     */
+    protected $location;
+
+    /**
      * Get id
      *
      * @return id $id
@@ -211,5 +221,49 @@ class Bar
     public function getHours()
     {
         return $this->hours;
+    }
+
+    /**
+     * Set website
+     *
+     * @param string $website
+     * @return self
+     */
+    public function setWebsite($website)
+    {
+        $this->website = $website;
+        return $this;
+    }
+
+    /**
+     * Get website
+     *
+     * @return string $website
+     */
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+
+    /**
+     * Set location
+     *
+     * @param collection $location
+     * @return self
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return collection $location
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 }
