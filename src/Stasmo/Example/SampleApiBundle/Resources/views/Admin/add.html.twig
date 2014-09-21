@@ -103,7 +103,14 @@
     Bar Name: <input type="text" id="barsearch" style="width: 30%" />
     <div id="barInfo"></div>
     <div style="width: 800px; height: 300px; margin: 10px;" id="map-canvas"></div>
-    {{ form(form) }}
+    {{ form_start(form) }}
+      {% for field in form %}
+      <div class="form-group">
+        {{ form_label(field) }}
+        {{ form_widget(field, { 'attr': {'class': 'form-control' }}) }}
+      </div>
+      {% endfor %}
+    {{ form_end(form) }}
   </div>
 </div>
 {% endblock %}

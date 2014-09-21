@@ -22,7 +22,6 @@ class AdminController extends Controller
     {
         $method = $request->getMethod();
         $page = $request->query->get('page');
-        $this->addSuccessFlash("hello");
         return $this->render(
             'StasmoExampleSampleApiBundle:Admin:index.html.twig',
             [ 'bars' => $this->getBarList($page), 'numberOfPages' => $this->getNumberOfBarPages() ]
@@ -41,6 +40,7 @@ class AdminController extends Controller
 
         if ($form->isValid()) {
             $this->saveBar($bar);
+            $this->addSuccessFlash("Created bar");
         }
         return $this->render(
             'StasmoExampleSampleApiBundle:Admin:add.html.twig',
@@ -69,6 +69,7 @@ class AdminController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             $this->saveBar($bar);
+            $this->addSuccessFlash("Saved bar");
         }
 
         return $this->render(
@@ -94,6 +95,7 @@ class AdminController extends Controller
         }
 
         $this->deleteBar($bar);
+        $this->addSuccessFlash("Deleted bar");
 
         return $this->redirect($this->get('router')->generate('admin_home'));
     }
