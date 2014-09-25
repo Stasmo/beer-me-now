@@ -1,6 +1,6 @@
 <?php
 
-namespace Stasmo\Example\SampleApiBundle\DependencyInjection;
+namespace Stasmo\BeerMe\BeerMeNowBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Stasmo\Example\SampleApiBundle\Document;
+namespace Stasmo\BeerMe\BeerMeNowBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 

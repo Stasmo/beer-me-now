@@ -1,6 +1,6 @@
 <?php
 
-namespace Stasmo\Example\SampleApiBundle\Controller;
+namespace Stasmo\BeerMe\BeerMeNowBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -21,7 +21,7 @@ class DefaultController extends Controller
             //extract search data from $request object
         }
 
-        return $this->render('StasmoExampleSampleApiBundle:Default:index.html.twig');
+        return $this->render('StasmoBeerMeBeerMeNowBundle:Default:index.html.twig');
     }
 
     /**

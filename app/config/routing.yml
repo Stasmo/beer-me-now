@@ -1,5 +1,5 @@
 stasmo_example_sample_api:
-    resource: "@StasmoExampleSampleApiBundle/Controller/"
+    resource: "@StasmoBeerMeBeerMeNowBundle/Controller/"
     type:     annotation
     prefix:   /
 

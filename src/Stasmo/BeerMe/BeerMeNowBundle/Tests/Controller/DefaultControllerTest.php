@@ -1,6 +1,6 @@
 <?php
 
-namespace Stasmo\Example\SampleApiBundle\Tests\Controller;
+namespace Stasmo\BeerMe\BeerMeNowBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

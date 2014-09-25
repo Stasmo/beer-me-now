@@ -1,13 +1,13 @@
 <?php
 
-namespace Stasmo\Example\SampleApiBundle\Controller;
+namespace Stasmo\BeerMe\BeerMeNowBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Stasmo\Example\SampleApiBundle\Document\Bar;
+use Stasmo\BeerMe\BeerMeNowBundle\Document\Bar;
 
 class AdminController extends Controller
 {
@@ -23,7 +23,7 @@ class AdminController extends Controller
         $method = $request->getMethod();
         $page = $request->query->get('page');
         return $this->render(
-            'StasmoExampleSampleApiBundle:Admin:index.html.twig',
+            'StasmoBeerMeBeerMeNowBundle:Admin:index.html.twig',
             [ 'bars' => $this->getBarList($page), 'numberOfPages' => $this->getNumberOfBarPages() ]
         );
     }
@@ -43,7 +43,7 @@ class AdminController extends Controller
             $this->addSuccessFlash("Created bar");
         }
         return $this->render(
-            'StasmoExampleSampleApiBundle:Admin:add.html.twig',
+            'StasmoBeerMeBeerMeNowBundle:Admin:add.html.twig',
             array(
                 'form' => $form->createView(),
             )
@@ -58,7 +58,7 @@ class AdminController extends Controller
     {
         $method = $request->getMethod();
         $bar = $this->get('doctrine_mongodb')
-            ->getRepository('StasmoExampleSampleApiBundle:Bar')
+            ->getRepository('StasmoBeerMeBeerMeNowBundle:Bar')
             ->find($id);
 
         if (!$bar) {
@@ -73,7 +73,7 @@ class AdminController extends Controller
         }
 
         return $this->render(
-            'StasmoExampleSampleApiBundle:Admin:add.html.twig',
+            'StasmoBeerMeBeerMeNowBundle:Admin:add.html.twig',
             array(
                 'form' => $form->createView(),
             )
@@ -87,7 +87,7 @@ class AdminController extends Controller
     {
         $method = $request->getMethod();
         $bar = $this->get('doctrine_mongodb')
-            ->getRepository('StasmoExampleSampleApiBundle:Bar')
+            ->getRepository('StasmoBeerMeBeerMeNowBundle:Bar')
             ->find($id);
 
         if (!$bar) {
@@ -137,7 +137,7 @@ class AdminController extends Controller
 
         $dm = $this->get('doctrine_mongodb')->getManager();
         $numSkip = ($page-1) * self::resultsPerPage;
-        $bars = $dm->createQueryBuilder('StasmoExampleSampleApiBundle:Bar')
+        $bars = $dm->createQueryBuilder('StasmoBeerMeBeerMeNowBundle:Bar')
             ->limit(self::resultsPerPage)
             ->skip($numSkip)
             ->getQuery()

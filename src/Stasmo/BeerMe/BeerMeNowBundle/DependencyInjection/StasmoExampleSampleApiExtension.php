@@ -1,6 +1,6 @@
 <?php
 
-namespace Stasmo\Example\SampleApiBundle\DependencyInjection;
+namespace Stasmo\BeerMe\BeerMeNowBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

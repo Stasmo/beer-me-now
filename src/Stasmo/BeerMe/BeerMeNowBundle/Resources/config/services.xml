@@ -6,7 +6,7 @@
 
     <!--
     <parameters>
-        <parameter key="stasmo_example_sample_api.example.class">Stasmo\Example\SampleApiBundle\Example</parameter>
+        <parameter key="stasmo_example_sample_api.example.class">Stasmo\BeerMe\BeerMeNowBundle\Example</parameter>
     </parameters>
 
     <services>
